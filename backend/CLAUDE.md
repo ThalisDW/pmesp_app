@@ -84,6 +84,7 @@ server/
 │   ├── AvaliacaoEstagio.ts       → avaliadorId/Nome/Rg, estagiarioId/Nome/Rg, avaliacao, pontoAtencao, nota (0-10), timestamps
 │   └── AvaliacaoRocam.ts         → avaliadorId/Nome/Rg, avaliadoId/Nome/Rg, avaliacao, pontoAtencao, nota (0-10), timestamps
 ├── middleware/
+│   ├── 00.spa.ts            → serve build do frontend quando SPA_DIR definido (imagem unificada)
 │   ├── 01.cors.ts
 │   └── 02.rateLimit.ts
 ├── plugins/
@@ -122,6 +123,11 @@ Secret sempre vem de `useRuntimeConfig().jwtSecret` — nunca hardcodar.
 `checkRate(key, limit, windowMs)` — janela fixa em memória (`Map`).
 Retorna `{ allowed, remaining, resetAt, retryAfter }`.
 Limpeza automática de entradas expiradas a cada 10 min via `setInterval`.
+
+### `server/middleware/00.spa.ts`
+Ativo só se `process.env.SPA_DIR` existir (setado no `Dockerfile` da raiz; em dev/compose não existe → no-op).
+GET/HEAD fora de `/api/`: serve arquivo de `SPA_DIR` se existir (`/assets/*` com cache imutável 1 ano), senão `index.html` (fallback do history mode, `no-cache`).
+Bloqueia path traversal (arquivo resolvido precisa estar dentro de `SPA_DIR`).
 
 ### `server/middleware/01.cors.ts`
 Seta headers CORS para `*`. Responde `204` para `OPTIONS` (preflight).
@@ -617,6 +623,7 @@ Ao criar este utilitário, refatorar os handlers existentes para usá-lo e atual
 ## Convenção de middlewares
 
 Nomear com prefixo numérico para garantir ordem de execução:
+- `00.spa.ts` — SPA estático (só imagem unificada)
 - `01.cors.ts` — CORS
 - `02.rateLimit.ts` — Rate limiting
 - `03+` — futuros (ex: logging, auth global)

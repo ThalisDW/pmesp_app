@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+**/.output
+**/.nuxt
+**/.nitro
+.env
+.env.*
+!.env.example
+.git
+.claude
