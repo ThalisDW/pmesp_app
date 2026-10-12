@@ -1,0 +1,35 @@
+# ── Dependências ──────────────────────────────
+node_modules/
+
+# ── Build outputs ─────────────────────────────
+dist/
+.output/
+.nuxt/
+.nitro/
+
+# ── Ambiente ──────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Claude Code ───────────────────────────────
+.claude/settings.local.json
+
+# ── Logs ──────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+
+# ── Sistema operacional ───────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editores ──────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Docker volumes locais ─────────────────────
+.docker/

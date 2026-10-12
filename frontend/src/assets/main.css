@@ -1,0 +1,135 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --primary: #1a3a6b;
+  --primary-dark: #0f2347;
+  --primary-light: #2a5298;
+  --accent: #c8a951;
+  --accent-light: #e6c96e;
+  --bg-dark: #0a0f1e;
+  --bg-light: #f0f4f8;
+  --surface: #ffffff;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+
+  --surface-soft: #f9fafb;
+  --surface-subtle: #f3f4f6;
+  --surface-brand-soft: #e8efff;
+  --surface-info-soft: #eff6ff;
+  --warning-soft: #fffbeb;
+  --warning: #b45309;
+  --danger-soft: #fef2f2;
+
+  --text-strong: #0f172a;
+  --text-soft: #6b7280;
+  --text-faint: #94a3b8;
+  --border-soft: #e5e7eb;
+
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 4%);
+
+  --font-family-base: 'Manrope', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-display: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --fs-2xs: 0.6rem;
+  --fs-xs: 0.7rem;
+  --fs-sm: 0.8rem;
+  --fs-md: 0.875rem;
+  --fs-lg: 1.05rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.75rem;
+
+  --lh-tight: 1;
+  --lh-base: 1.5;
+  --lh-relaxed: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg-light: #0b1220;
+    --surface: #111827;
+    --surface-soft: #1f2937;
+    --surface-subtle: #273244;
+    --surface-brand-soft: #1f2a44;
+    --surface-info-soft: #1b2b47;
+    --danger-soft: #3b1a1d;
+    --warning-soft: #3a2d12;
+    --success-bg: #123021;
+    --error-bg: #3b1a1d;
+
+    --text: #e5e7eb;
+    --text-strong: #f3f4f6;
+    --text-muted: #9ca3af;
+    --text-soft: #cbd5e1;
+    --text-faint: #94a3b8;
+    --border: #374151;
+    --border-soft: #4b5563;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg-light: #0b1220;
+  --surface: #111827;
+  --surface-soft: #1f2937;
+  --surface-subtle: #273244;
+  --surface-brand-soft: #1f2a44;
+  --surface-info-soft: #1b2b47;
+  --danger-soft: #3b1a1d;
+  --warning-soft: #3a2d12;
+  --success-bg: #123021;
+  --error-bg: #3b1a1d;
+
+  --text: #e5e7eb;
+  --text-strong: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-soft: #cbd5e1;
+  --text-faint: #94a3b8;
+  --border: #8c9097;
+  --border-soft: #4b5563;
+  --primary: #225eb8;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+  background: var(--bg-light);
+}
+
+#app {
+  height: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

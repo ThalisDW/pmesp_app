@@ -1,0 +1,66 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: pmesp_mongo_dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-pmesp2024}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-pmesp}
+    volumes:
+      - mongo_data_dev:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - pmesp_dev
+
+  backend:
+    image: node:20-alpine
+    container_name: pmesp_backend_dev
+    working_dir: /app
+    # Instala deps na primeira vez (cached no volume) e sobe dev server
+    command: sh -c "npm install && npm run dev"
+    environment:
+      NUXT_HOST: 0.0.0.0
+      NUXT_PORT: 4000
+      NUXT_MONGO_URI: mongodb://${MONGO_USER:-admin}:${MONGO_PASSWORD:-pmesp2024}@mongo:27017/${MONGO_DB:-pmesp}?authSource=admin
+      NUXT_JWT_SECRET: ${JWT_SECRET:-pmesp_jwt_secret_change_in_production}
+      NODE_ENV: development
+    volumes:
+      - ./backend:/app                   # código-fonte espelhado
+      - backend_node_modules:/app/node_modules  # node_modules isolado no container
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    networks:
+      - pmesp_dev
+
+  frontend:
+    image: node:20-alpine
+    container_name: pmesp_frontend_dev
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    environment:
+      VITE_API_URL: http://localhost:4000
+    volumes:
+      - ./frontend:/app                    # código-fonte espelhado
+      - frontend_node_modules:/app/node_modules  # node_modules isolado no container
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - pmesp_dev
+
+volumes:
+  mongo_data_dev:
+    driver: local
+  backend_node_modules:   # isolado para não conflitar com node_modules do host
+    driver: local
+  frontend_node_modules:
+    driver: local
+
+networks:
+  pmesp_dev:
+    driver: bridge
