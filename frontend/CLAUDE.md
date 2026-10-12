@@ -193,7 +193,7 @@ Store Pinia `efetivo`. Busca dados via `GET /api/efetivo`.
 
 ### `src/composables/useApi.js`
 `useApi()` → retorna `{ get, post, put, delete }`.
-Base URL: `import.meta.env.VITE_API_URL ?? 'http://localhost:4000'` (`??`, não `||`: string vazia = mesma origem, usada na imagem unificada). `stores/institucional.js` usa a mesma regra.
+Base URL: `import.meta.env.VITE_API_URL || 'http://localhost:4000'`.
 Injeta `Authorization: Bearer <token>` automaticamente se `auth.token` existir.
 Em erro 401: chama `auth.logout()` e redireciona `/login`.
 Erros expõem `error.status` e `error.retryAfter` (do header `Retry-After`).

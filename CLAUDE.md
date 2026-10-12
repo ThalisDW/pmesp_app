@@ -122,17 +122,6 @@ Frontend: botão de login fica bloqueado com countdown regressivo visível.
 **dev:** `node:20-alpine` com volumes `./backend:/app` e `./frontend:/app`. node_modules em volumes nomeados separados (`backend_node_modules`, `frontend_node_modules`) para não conflitar com host.
 **polling:** `usePolling: true` + `interval: 300ms` no Vite e Nuxt — necessário para file-watching funcionar em volumes Docker no Windows.
 **NUXT_HOST=0.0.0.0** e **NUXT_PORT=4000** injetados via env no dev compose para o servidor escutar em todas as interfaces.
-
-### Deploy Northflank (imagem unificada)
-
-`Dockerfile` na **raiz** (context `/`) compila frontend + backend numa imagem só — necessário porque o free tier da Northflank permite 1 projeto e 2 serviços (já usados pelo bot).
-- Frontend buildado com `VITE_API_URL=` (vazio → chamadas relativas `/api/...`, mesma origem, sem CORS).
-- Dist do Vue copiado para `/app/spa`; `SPA_DIR=/app/spa` ativa `backend/server/middleware/00.spa.ts`.
-- Porta 4000. Health check `/api/health`.
-- Northflank: projeto `bot-discord` (us-central), serviço `pmesp-backend`, secret group `pmesp-backend-env` (restrito ao serviço) com `NUXT_MONGO_URI` + `NUXT_JWT_SECRET`.
-- Mongo: addon `mongodb` do bot, banco `pmesp`, usuário admin do addon (readWriteAnyDatabase — limitação do addon, aceito pelo dono).
-- `.dockerignore` na raiz exclui node_modules/dist/.output/.env.
-
 **prod frontend:** Nginx escuta em `${PORT}` (default `8080` no Dockerfile, substituído via `envsubst` no start). Compose prod mapeia `3000:8080`.
 
 ---
