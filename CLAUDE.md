@@ -122,6 +122,7 @@ Frontend: botão de login fica bloqueado com countdown regressivo visível.
 **dev:** `node:20-alpine` com volumes `./backend:/app` e `./frontend:/app`. node_modules em volumes nomeados separados (`backend_node_modules`, `frontend_node_modules`) para não conflitar com host.
 **polling:** `usePolling: true` + `interval: 300ms` no Vite e Nuxt — necessário para file-watching funcionar em volumes Docker no Windows.
 **NUXT_HOST=0.0.0.0** e **NUXT_PORT=4000** injetados via env no dev compose para o servidor escutar em todas as interfaces.
+**prod frontend:** Nginx escuta em `${PORT}` (default `8080` no Dockerfile, substituído via `envsubst` no start). Compose prod mapeia `3000:8080`.
 
 ---
 
